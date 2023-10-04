@@ -1,0 +1,76 @@
+﻿@model TransactionRecordManagement.Models.Transaction
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Transaction</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TransactionDate" class="control-label"></label>
+                <input asp-for="TransactionDate" class="form-control" />
+                <span asp-validation-for="TransactionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <select asp-for="Description" class="form-control">
+                    <option value="">Select Description</option>
+                    <option value="Setor Tunai">Setor Tunai</option>
+                    <option value="Beli Pulsa">Beli Pulsa</option>
+                    <option value="Bayar Listrik">Bayar Listrik</option>
+                    <option value="Tarik Tunai">Tarik Tunai</option>>
+                    <option value="Setor Tunai">Setor Tunai</option>
+                </select>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DebitCreditStatus" class="control-label"></label>
+                <select asp-for="DebitCreditStatus" class="form-control">
+                    <option value="">Select Status</option>
+                    <option value="D">Debit</option>
+                    <option value="C">Credit</option>
+                </select>
+                <span asp-validation-for="DebitCreditStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @{
+                    CustomerDataAccessLayer customerDataAccessLayer = new CustomerDataAccessLayer();
+                    var customers = customerDataAccessLayer.GetAllCustomer();
+                    SelectList customerSelectList = null;
+
+                    if (customers != null && customers.Any())
+                    {
+                        customerSelectList = new SelectList(customers, "AccountId", "Name");
+                    }
+                }
+                <label asp-for="AccountId" class="control-label"></label>
+                <select asp-for="AccountId" asp-items="@(customerSelectList)" class="form-control">
+                    <option value="">Select an customer</option>
+                </select>
+                <span asp-validation-for="AccountId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

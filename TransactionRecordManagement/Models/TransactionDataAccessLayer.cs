@@ -67,11 +67,11 @@ namespace TransactionRecordManagement.Models
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("p_TransactionId", transaction.TransactionId);
+                cmd.Parameters.AddWithValue("p_AccountId", transaction.AccountId);
                 cmd.Parameters.AddWithValue("p_TransactionDate", transaction.TransactionDate);
                 cmd.Parameters.AddWithValue("p_Description", transaction.Description);
                 cmd.Parameters.AddWithValue("p_DebitCreditStatus", transaction.DebitCreditStatus);
                 cmd.Parameters.AddWithValue("p_Amount", transaction.Amount);
-                cmd.Parameters.AddWithValue("p_AccountId", transaction.AccountId);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
